@@ -1,0 +1,15 @@
+[{
+  "name": "geth",
+  "cwd": "/Users/huliqun/geth",
+  "script": "geth",
+  "args": "--rpcapi db,eth,net,web3,personal,web3 --rpc --dev --datadir /Users/huliqun/geth/geth_private_data",
+  "log_date_format": "YYYY-MM-DD HH:mm Z",
+  "out_file": "/Users/huliqun/geth/geth_private_data/log/geth_out.log",
+  "error_file": "/Users/huliqun/geth/geth_private_data/log/geth_err.log",
+  "log_file": "/Users/huliqun/geth/geth_private_data/log/geth_log.log",
+  "merge_logs": false,
+  "watch": false,
+  "max_restarts": 10,
+  "exec_interpreter": "none",
+  "exec_mode": "fork_mode"
+}]
