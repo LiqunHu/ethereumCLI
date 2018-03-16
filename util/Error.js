@@ -8,4 +8,5 @@ module.exports = {
     Ethereum_03: 'recover failed',
     Ethereum_04: 'mnemonic miss',
     Ethereum_05: 'privatekey miss',
+    Ethereum_06: 'transaction miss',
 };

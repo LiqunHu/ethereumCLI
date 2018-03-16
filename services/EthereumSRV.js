@@ -24,6 +24,8 @@ exports.EthereumResource = (req, res) => {
         keystore_to_privatekeyAct(req, res)
     } else if (method === 'change_password') {
         change_passwordAct(req, res)
+    } else if (method === 'sign_transaction') {
+        sign_transactionAct(req, res)
     } else {
         common.sendError(res, 'common_01');
     }
@@ -178,6 +180,34 @@ async function change_passwordAct(req, res) {
 
         common.sendData(res, {
             keystore: keystore
+        });
+    } catch (error) {
+        common.sendFault(res, error);
+    }
+}
+
+async function sign_transactionAct(req, res) {
+    try {
+        let doc = common.docTrim(req.body)
+
+        if (!('password' in doc)) {
+            return common.sendError(res, 'Ethereum_01');
+        }
+
+        if (!('keystore' in doc)) {
+            return common.sendError(res, 'Ethereum_02');
+        }
+
+        if (!('transaction' in doc)) {
+            return common.sendError(res, 'Ethereum_06');
+        }
+
+        let account = await web3.eth.accounts.decrypt(doc.keystore, doc.password);
+
+        let signResult = await web3.eth.accounts.signTransaction(doc.transaction, account.privateKey)
+
+        common.sendData(res, {
+            transaction: signResult
         });
     } catch (error) {
         common.sendFault(res, error);
