@@ -4,9 +4,8 @@ module.exports = {
     common_api_02: '选定项目不存在',
     domain_01: '组织已存在',
     Ethereum_01: 'password miss',
-    Ethereum_02: 'address miss',
-    Ethereum_03: 'account do not exist',
-    Ethereum_04: 'url miss',
-    Ethereum_05: 'name miss',
-    Ethereum_06: 'fileName error',
+    Ethereum_02: 'keystore miss',
+    Ethereum_03: 'recover failed',
+    Ethereum_04: 'mnemonic miss',
+    Ethereum_05: 'privatekey miss',
 };
