@@ -43,9 +43,9 @@ async function searchAct(req, res) {
 
 async function testAct(req, res) {
   try {
-    let balance = await web3.eth.getBalance("0x4c2614bb4f821983866274e2bfe00470f7e3780a");
+    let balance = await web3.eth.getBalance("0xa9857f0f1f8c1770b4c283796834133658c3d30e");
     console.log(balance);
-    web3.eth.defaultAccount = "0x308c16662c2668787c2bb83d0d40a07f6a725520"
+    web3.eth.defaultAccount = "0xa9857f0f1f8c1770b4c283796834133658c3d30e"
     let privateKey = new Buffer('3da5c73935a13375b5dd699138c2a155afb7abd1c512f6130a748fce33ff9d55', 'hex')
 
     let account = await web3.eth.accounts.privateKeyToAccount('0x3da5c73935a13375b5dd699138c2a155afb7abd1c512f6130a748fce33ff9d55');

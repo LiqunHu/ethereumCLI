@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid');
+const bip39 = require('bip39')
+const hdkey = require('ethereumjs-wallet/hdkey')
 
 const common = require('../util/CommonUtil');
 const GLBConfig = require('../util/GLBConfig');
@@ -10,8 +12,8 @@ const web3 = require('../util/EthereumClient').web3
 
 exports.EthereumResource = (req, res) => {
   let method = req.query.method
-  if (method === 'personal_newAccount') {
-    personal_newAccountAct(req, res)
+  if (method === 'new_account') {
+    new_accountAct(req, res)
   } else if (method === 'create_wallet') {
     create_walletAct(req, res)
   } else if (method === 'create_account') {
@@ -27,7 +29,7 @@ exports.EthereumResource = (req, res) => {
   }
 }
 
-async function personal_newAccountAct(req, res) {
+async function new_accountAct(req, res) {
   try {
     let doc = common.docTrim(req.body)
 
@@ -35,10 +37,17 @@ async function personal_newAccountAct(req, res) {
       return common.sendError(res, 'Ethereum_01');
     }
 
-    let address = await web3.eth.personal.newAccount()
+    let mnemonic = bip39.generateMnemonic()
+    let seed = bip39.mnemonicToSeed(mnemonic, "")
+    let hdWallet = hdkey.fromMasterSeed(seed)
+    let account = hdWallet.derivePath("m/44'/60'/0'/0/0")
+    // console.log(account._hdkey._privateKey);
+    // let ethAccount = await web3.eth.accounts.privateKeyToAccount('0x'+ account._hdkey._privateKey.toSting('hex'));
+    let keystore = await web3.eth.accounts.encrypt('0x'+ account._hdkey._privateKey.toString('hex'), doc.password);
 
     common.sendData(res, {
-      address: address
+      mnemonic: mnemonic,
+      keystore: keystore
     });
 
   } catch (error) {
